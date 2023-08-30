@@ -14,17 +14,7 @@ class JsonController extends Controller
     public function store(Request $request)
     {
 
-        // Validate that the request contains a JSON payload
-        // $validator = Validator::make($request->json()->all(), [
-        //     '*' => 'required|non_empty_json',
-        // ]);
-        // // Check if validation fails
-        // if ($validator->fails()) {
-        //     return response()->json(['error' => 'Invalid JSON payload'], 400);
-        // }
-
-
-        // If validation passes, continue to store the JSON data
+       
         if (Auth::check()) {
             $userId = Auth::user()->id;
             // You now have the ID of the logged-in user

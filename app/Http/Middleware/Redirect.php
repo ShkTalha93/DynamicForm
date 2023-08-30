@@ -30,10 +30,10 @@ class Redirect
                 $user = Auth::user();
                 if ($user->is_admin) {
                     //return redirect('/admin');
-                    return response()->json('Admin Login Successful!', 200);
+                    return response()->json('admin', 200);
                 } else {
                     //return redirect('/customer');
-                    return response()->json('Customer Login Successful!', 200);
+                    return response()->json('user', 200);
                 }
 
             } else {

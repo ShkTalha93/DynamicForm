@@ -31,9 +31,10 @@ class UserController extends Controller
             $users = new User($validatedData);
 
             $users->save();
+            $token = $users->createToken('api-token')->plainTextToken;
 
 
-            return response()->json(['message' => 'User registered successfully']);
+            return response()->json(['message' => 'User registered successfully', 'token' => $token]);
         } catch (QueryException $e) {
             // Handle database-related exceptions
             print_r('Query Exception: ' . $e->getMessage());
@@ -70,7 +71,7 @@ class UserController extends Controller
 
         } catch (\Exception $e) {
             // Handle other exceptions
-            return response()->json(['message' => 'Error Occured :Please Enter Both Email and Password']);
+            return response()->json(['message' => $e->getMessage()]);
         }
 
     }
