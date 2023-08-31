@@ -31,7 +31,7 @@ class UserController extends Controller
             $users = new User($validatedData);
 
             $users->save();
-            
+
 
 
             return response()->json(['message' => 'User registered successfully']);
@@ -83,9 +83,10 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Logged out successfully']);
     }
-public function user(){
-    $users=User::all();
-    return response($users);
-}
+    public function user()
+    {
+        $users = User::where('id', '!=', 8)->get();
+        return response($users);
+    }
 
 }
