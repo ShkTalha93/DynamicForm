@@ -38,13 +38,15 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'users'
         ],
-        
+
         'api' => [
-        'driver' => 'sanctum',
-        'provider' => 'users',
-    ],
+            'driver' => 'passport',
+            // This should be 'passport'
+            'provider' => 'users',
+            "hash" => false,
+        ],
     ],
 
     /*

@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::any('/', function () {
+    return "You need to login first";
+})->name('welcome');;
 
 // Route::post('/register', [UserController::class, 'store']);
 // Route::post('/login', [UserController::class, 'login'])->middleware('check');

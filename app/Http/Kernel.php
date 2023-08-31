@@ -15,7 +15,9 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
             // \App\Http\Middleware\TrustHosts::class,
-        \App\Http\Middleware\CorsMiddleware::class,
+
+
+            // \App\Http\Middleware\CorsMiddleware::class,
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
@@ -37,14 +39,19 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
         ],
 
         'api' => [
-                // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            // \Barryvdh\Cors\HandleCors::class,
+            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
 
-
-            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
+            //     \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
+                \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
+            //     \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            
         ],
     ];
 
@@ -58,6 +65,8 @@ class Kernel extends HttpKernel
     protected $middlewareAliases = [
 
         'auth' => \App\Http\Middleware\Authenticate::class,
+        'auth:api'=>\Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
+        
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

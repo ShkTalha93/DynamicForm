@@ -31,10 +31,10 @@ class UserController extends Controller
             $users = new User($validatedData);
 
             $users->save();
-            $token = $users->createToken('api-token')->plainTextToken;
+            
 
 
-            return response()->json(['message' => 'User registered successfully', 'token' => $token]);
+            return response()->json(['message' => 'User registered successfully']);
         } catch (QueryException $e) {
             // Handle database-related exceptions
             print_r('Query Exception: ' . $e->getMessage());
@@ -75,6 +75,17 @@ class UserController extends Controller
         }
 
     }
+    public function logout(Request $request)
+    {
+        Auth::user()->tokens->each(function ($token) {
+            $token->delete();
+        });
 
+        return response()->json(['message' => 'Logged out successfully']);
+    }
+public function user(){
+    $users=User::all();
+    return response($users);
+}
 
 }

@@ -6,6 +6,9 @@ use Closure;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\Passport;
+
 
 class Redirect
 {
@@ -30,10 +33,15 @@ class Redirect
                 $user = Auth::user();
                 if ($user->is_admin) {
                     //return redirect('/admin');
-                    return response()->json('admin', 200);
+                    $accessToken = $user->createToken('MyAppToken')->accessToken;
+
+                    return response()->json(['role' => 'admin', 'token' => $accessToken], 200);
                 } else {
                     //return redirect('/customer');
-                    return response()->json('user', 200);
+                    // $accessToken = $user->createToken('MyAppToken')->accessToken;
+                    $accessToken = $user->createToken('MyAppToken')->accessToken;
+
+                    return response()->json(['role' => 'user', 'token' => $accessToken], 200);
                 }
 
             } else {
@@ -42,7 +50,8 @@ class Redirect
 
         } catch (\Exception $e) {
             // Handle other exceptions
-            return response()->json(['message' => 'Error Occured :Please Enter Both Email and Password']);
+            \Log::error($e);
+            return response()->json(['message' => $e->getMessage()]);
         }
 
         // return $next($request);
